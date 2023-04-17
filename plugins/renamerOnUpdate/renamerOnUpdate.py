@@ -1354,10 +1354,18 @@ if PLUGIN_ARGS:
             exit_plugin()
         for scene in scenes['scenes']:
             log.LogDebug(f"** Checking scene: {scene['title']} - {scene['id']} **")
-            try:
-                renamer(scene, stash_db)
-            except Exception as err:
-                log.LogError(f"main function error: {err}")
+            skip = False
+            for ignore in config.ignore_dirs:
+                for file in scene['files']:
+                    if ignore in file['path']:
+                        log.LogInfo(f"Skipping scene: {scene['files'][0]['path']}")
+                        skip = True
+                        break
+            if not skip:
+                try:
+                    renamer(scene, stash_db)
+                except Exception as err:
+                    log.LogError(f"main function error: {err}")
             progress += progress_step
             log.LogProgress(progress)
         stash_db.close()
