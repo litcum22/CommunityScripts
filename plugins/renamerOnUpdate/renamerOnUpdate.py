@@ -1134,6 +1134,9 @@ def renamer(scene_id, db_conn=None):
 
         #log.LogDebug(f"Filename: {scene_information['current_filename']} -> {scene_information['new_filename']}")
         #log.LogDebug(f"Path: {scene_information['current_directory']} -> {scene_information['new_directory']}")
+        if any(i in scene_information['current_path'] for i in config.ignore_dirs):
+            log.LogInfo(f"Ignoring based on path. ({scene_information['current_filename']})")
+            continue
 
         if scene_information['final_path'] == scene_information['current_path']:
             log.LogInfo(f"Everything is ok. ({scene_information['current_filename']})")

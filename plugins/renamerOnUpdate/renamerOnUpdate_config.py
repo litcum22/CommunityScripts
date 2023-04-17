@@ -232,6 +232,10 @@ tags_blacklist = [
 	# ignored tags...
 ]
 
+ignore_dirs = [
+    # ignored dirs...
+]
+
 # Only rename 'Organized' scenes.
 only_organized = False
 
